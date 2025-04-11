@@ -32,13 +32,14 @@
     
             <%- include('partials/navbar.ejs') %>
 
-            <%- include('partials/sidebar.ejs') %>
+            <%- include('partials/sidebar.ejs', { username, email  }) %>
+
 
             <div class="mx-auto xl:ml-xss xl:pl-4">
                 <section data-section-id="2" data-share="" data-category="title" data-component-id="25412442_01_awz" class="py-4 bg-white overflow-hidden">
                     <div class="container px-4 mx-auto">
-                      <h1 class="font-heading mb-1 text-2xl font-semibold" data-config-id="txt-aaf232-1">Welcome John 👋</h1>
-                      <p class="text-sm text-neutral-500" data-config-id="txt-aaf232-2">Check today’s sales report</p>
+                      <h1 class="font-heading mb-1 text-2xl font-semibold" data-config-id="txt-aaf232-1">Welcome <%=username%> 👋</h1>
+                      <p class="text-sm text-neutral-500" data-config-id="txt-aaf232-2">Let's explore!</p>
                     </div>
                   </section>
 
