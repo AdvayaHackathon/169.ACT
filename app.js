@@ -18,6 +18,33 @@ app.set("view engine", "ejs");
 const general = require('./routes/general.js');
 app.use('/', general);
 
+function getIndiaTime() {
+    let options = {
+        timeZone: "Asia/Kolkata",
+        year: "numeric",
+        month: "numeric",
+        day: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: true
+    };
+
+    let indiaDateTime = new Intl.DateTimeFormat("en-US", options).format(new Date());
+    return indiaDateTime;
+}
+
+function generateID(length) {
+    let result = '';
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const charactersLength = characters.length;
+    let counter = 0;
+    while (counter < length) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+        counter += 1;
+    }
+    return result;
+}
 
 app.post("/register", isNotAuthenticated, async (req, res) => {
     const { username, email, password, age, gender } = req.body;
