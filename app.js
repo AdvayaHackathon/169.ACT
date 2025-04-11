@@ -18,6 +18,11 @@ app.set("view engine", "ejs");
 const general = require('./routes/general.js');
 app.use('/', general);
 
+// Serve static files from the 'public' directory 
+app.use('/images', express.static(path.join(__dirname, 'public/images')));
+app.use('/scripts', express.static(path.join(__dirname, 'public/scripts')));
+app.use('/dump', express.static(path.join(__dirname, 'public/static')));
+
 function getIndiaTime() {
     let options = {
         timeZone: "Asia/Kolkata",
@@ -114,5 +119,14 @@ app.get('/logout', (req, res) => {
     res.clearCookie('token');
     return res.redirect('/login')
 });
+
+app.get('/dashboard', isAuthenticated, (req, res) => {
+    console.log(req.user)
+    res.render('dashboard')
+})
+
+app.get('/assistant', isAuthenticated, (req, res) => {
+    res.render('assistant')
+})
 
 app.listen(PORT)
