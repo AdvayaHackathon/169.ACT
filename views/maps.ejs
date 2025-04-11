@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html class="screen-top">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Page title</title>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap">
+    <link rel="stylesheet" id="bs-base-fonts">
+    <link rel="stylesheet" href="http://localhost:3000/dump/landing/tailwind.min.css" id="bs-base-css">
+    <link rel="stylesheet" href="http://localhost:3000/dump/landing/tailwind.min.css">
+    <style type="text/css" id="bs-recompiled-css"></style>
+    <style type="text/css" id="bs-custom-css"></style>
+
+
+    <link href="http://localhost:3000/dump/dashboard/shuffle-preview.1f8cac6f.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js" defer=""></script>
+    <script src="http://localhost:3000/dump/dashboard/onsite.js"></script>
+    <script src="http://localhost:3000/dump/dashboard/runtime.68afddf3.js" defer=""></script>
+    <script src="http://localhost:3000/dump/dashboard/tailwind.e509ab58.js" defer=""></script>
+
+
+        <!-- Font Awesome for icons -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <link rel="stylesheet" href="http://localhost:3000/styles/map.css">
+    </head>
+<style>
+    body {
+        background-color: white !important;
+    }
+
+    .maps_container {
+        width: 100%;
+        height: 100%;
+        background-color: pink;
+    }
+</style>
+
+<body id="page" class="has-vertical-navigation antialiased font-body bg-body text-body">
+    <div class="" id="content">
+
+        <section data-section-id="1" data-share="" data-category="vertical-nav" data-component-id="33d42e93_02_awz"
+            class="relative bg-white" data-container="1" x-data="{ mobileNavOpen: false, nav: '' }"
+            x-init="nav = $refs.nav1.textContent">
+    
+            <%- include('partials/navbar.ejs') %>
+
+            <%- include('partials/sidebar.ejs') %>
+
+            <div class="mx-auto xl:ml-xss xl:pl-4">
+
+                <div class="container-fluid">
+                    <header class="py-3 mb-3">
+                        <div class="container">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <div class="legend">
+                                    <span class="legend-item"><i class="fas fa-tree text-success"></i> Parks & Nature</span>
+                                    <span class="legend-item"><i class="fas fa-landmark text-primary"></i> Historical Sites</span>
+                                    <span class="legend-item"><i class="fas fa-shopping-bag text-danger"></i> Shopping</span>
+                                    <span class="legend-item"><i class="fas fa-utensils text-warning"></i> Food & Dining</span>
+                                    <span class="legend-item"><i class="fas fa-hotel text-info"></i> Accommodations</span>
+                                </div>
+                            </div>
+                        </div>
+                    </header>
+            
+                    <main class="container">
+                        <div class="map-container">
+                            <div id="map"></div>
+                        </div>
+                    </main>
+                </div>
+            
+
+            </div>
+
+        </section>
+    </div>
+
+
+        <!-- Custom JS for Map -->
+        <script src="http://localhost:3000/scripts/map.js"></script>
+    
+        <!-- Google Maps API with provided key -->
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBMNq-IecHULn1F_ivpXM_EDAjfZq8ysH0&callback=initMap" async defer></script>
+</body>
+</html>
