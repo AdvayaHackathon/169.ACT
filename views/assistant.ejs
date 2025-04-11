@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html class="screen-top">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Page title</title>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap">
+    <link rel="stylesheet" id="bs-base-fonts">
+    <link rel="stylesheet" href="http://localhost:3000/dump/landing/tailwind.min.css" id="bs-base-css">
+    <link rel="stylesheet" href="http://localhost:3000/dump/landing/tailwind.min.css">
+    <style type="text/css" id="bs-recompiled-css"></style>
+    <style type="text/css" id="bs-custom-css"></style>
+
+
+    <link href="http://localhost:3000/dump/dashboard/shuffle-preview.1f8cac6f.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js" defer=""></script>
+    <script src="http://localhost:3000/dump/dashboard/onsite.js"></script>
+    <script src="http://localhost:3000/dump/dashboard/runtime.68afddf3.js" defer=""></script>
+    <script src="http://localhost:3000/dump/dashboard/tailwind.e509ab58.js" defer=""></script>
+
+</head>
+<style>
+    body {
+        background-color: white !important;
+    }
+</style>
+
+<body id="page" class="has-vertical-navigation antialiased font-body bg-body text-body">
+    <div class="" id="content">
+
+        <section data-section-id="1" data-share="" data-category="vertical-nav" data-component-id="33d42e93_02_awz"
+            class="relative bg-white" data-container="1" x-data="{ mobileNavOpen: false, nav: '' }"
+            x-init="nav = $refs.nav1.textContent">
+    
+            <%- include('partials/navbar.ejs') %>
+
+            <%- include('partials/sidebar.ejs') %>
+
+            <div class="mx-auto xl:ml-xss xl:pl-4">
+                
+                
+                <div id="questions">
+                    
+                    <div class="container mx-auto px-4 py-12 max-w-3xl">
+                        <div class="mb-10">
+                            <h2 class="font-heading text-4xl font-bold tracking-tight mb-4" data-config-id="text1">Let's get to know you</h2>
+                            <p class="text-gray-600" data-config-id="text10">Please provide the following information to help us customize your experience.</p>
+                        </div>
+                        <div class="bg-white p-8 rounded-xl shadow-sm mb-8">
+                            <div class="flex items-center mb-8">
+                                <div class="w-10 h-10 rounded-full bg-gradient-purple-left flex items-center justify-center text-white font-semibold">1</div>
+                                <div class="ml-4">
+                                    <h3 class="font-heading text-lg font-semibold" data-config-id="text2">Your Location</h3>
+                                    <p class="text-sm text-gray-500" data-config-id="text11">Tell us where you're located</p>
+                                </div>
+                            </div>
+                            
+                                <div class="mb-6">          <label class="block font-heading mb-2.5 text-sm font-semibold" data-config-id="text7">Where are you located?</label>          
+                                    <input id="location-info" autofill="off" aut class="py-2.5 px-3.5 text-sm w-full hover:bg-gray-50 outline-none placeholder-neutral-400 border border-neutral-200 rounded-lg focus-within:border-neutral-600" type="text" placeholder="Enter your city" autocomplete="off">        </div>  
+                            
+                        </div>
+
+                        <div class="bg-white p-8 rounded-xl shadow-sm mb-8">
+                            <div class="flex items-center mb-8">
+                                <div class="w-10 h-10 rounded-full bg-gradient-purple-left flex items-center justify-center text-white font-semibold">2</div>
+                                <div class="ml-4">
+                                    <h3 class="font-heading text-lg font-semibold" data-config-id="text2">Your Interests</h3>
+                                    <p class="text-sm text-gray-500" data-config-id="text11">What would you like to explore in this location</p>
+                                </div>
+                            </div>
+                            
+                                <div class="mb-6">          <label class="block font-heading mb-2.5 text-sm font-semibold" data-config-id="text8">What are your interests?</label>          
+                                    <input id="interest-input" autocomplete="off" class="py-2.5 px-3.5 text-sm w-full hover:bg-gray-50 outline-none placeholder-neutral-400 border border-neutral-200 rounded-lg focus-within:border-neutral-600" type="text" placeholder="Enter your interests" data-config-id="input_attr14">        </div>
+                                <button id="generateNow" class="inline-flex flex-wrap items-center px-5 py-3.5 text-sm text-neutral-50 font-medium bg-gradient-purple-left hover:bg-gradient-purple-left-dark rounded-lg transition duration-300" type="button">Continue</button>      
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <div id="loading" style="display: none; margin-top: 3rem;">
+                    <div class="text-center">
+                        <h2 class="font-heading text-3xl font-bold tracking-tight mb-8 text-neutral-800" data-config-id="text2">Generating!</h2>
+                        <div class="flex justify-center space-x-2 mb-6">
+                            <!-- Loading dots -->      
+                            <div class="w-4 h-4 rounded-full bg-indigo-500 animate-bounce" style="animation-delay: 0.1s;"></div>
+                            <div class="w-4 h-4 rounded-full bg-purple-500 animate-bounce" style="animation-delay: 0.3s;"></div>
+                            <div class="w-4 h-4 rounded-full bg-pink-500 animate-bounce" style="animation-delay: 0.5s;"></div>
+                        </div>
+                        <div class="relative w-72 h-2 mx-auto bg-gray-200 rounded-full overflow-hidden">
+                            <div class="absolute top-0 left-0 h-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-full animate-pulse"></div>
+                        </div>
+                        <p class="mt-4 text-sm text-neutral-600" data-config-id="text4">Please wait while we process your request...</p>
+                    </div>
+                </div>
+
+                <div id="output" style="display: none; margin-top: 3rem;">
+                    <div class="max-w-3xl mx-auto">
+                        <h2 class="font-heading text-3xl md:text-4xl font-bold tracking-tight text-gray-900 mb-8" data-config-id="text11">Here are some places you should check out</h2>
+                        <div class="space-y-6" id="outputList"></div>
+                    </div>
+                </div>
+
+
+
+            </div>
+
+        </section>
+    </div>
+
+    <script>
+        var city;
+        document.getElementById('generateNow').addEventListener('click', async () => {
+          const locationInfo = document.getElementById('location-info').value.trim();
+          const interestInput = document.getElementById('interest-input').value.trim();
+        
+          if (!locationInfo || !interestInput) {
+            alert('Please fill in both Location Info and Interest fields.');
+            return;
+          }
+        
+          const data = {
+            location: locationInfo,
+            interest: interestInput
+          };
+
+          city = data.location;
+          document.getElementById('questions').style.display = 'none';
+          document.getElementById('loading').style.display = 'block';
+          
+
+          try {
+            const response = await fetch('/generate', {
+              method: 'PUT',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(data)
+            });
+        
+            const result = await response.json();
+            document.getElementById('loading').style.display = 'none';
+            const outputDiv = document.getElementById('outputList');
+
+            console.log('Response:', result);
+            
+            for (let i = 0; i < result.length; i++) {
+                const newCard = document.createElement('div');
+
+                let place = result[i];
+                let title;
+                let desc;
+                for (const key in place) {
+                    if (place.hasOwnProperty(key)) {
+                        title = key;
+                        desc = place[key]
+                    }
+                }
+
+                let url = "https://www.google.com/maps/search/"
+                let a = title.split(' ').join('+');
+                let link = url + a + ",+" + city;
+                console.log(link);
+
+                newCard.innerHTML = `
+                <div class="bg-white rounded-xl shadow-md overflow-hidden transition-transform duration-300 hover:shadow-lg hover:-translate-y-1">
+                    <div class="flex flex-col md:flex-row">
+                    <div class="p-6 md:w-2/3">
+                        <h3 class="font-heading text-xl font-semibold text-gray-900 mb-2" data-config-id="text12">${title}</h3>
+                        <p class="text-base text-neutral-600 mb-4" data-config-id="text22">
+                        ${desc}
+                        </p>
+                        <a href="${link}" target="_blank" class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" data-config-id="svg-inline6">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
+                        Open in Google Maps            
+                        </a>
+                    </div>
+                    </div>
+                </div>
+                `;
+            
+                outputDiv.appendChild(newCard);
+            }
+
+            document.getElementById('output').style.display = 'block';
+
+          } catch (error) {
+            console.error('Error:', error);
+          }
+        });
+
+    </script>
+        
+</body>
+</html>
