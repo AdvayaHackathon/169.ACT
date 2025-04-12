@@ -7,21 +7,44 @@ const fs = require("fs");
 const axios = require("axios");
 const { isAuthenticated, isNotAuthenticated, validateToken } = require('./middleware/auth.js');
 const app = express();
+const multer = require('multer');
+const helper = require('./manager.js')
 const PORT = 3000;
 const SECRET_KEY = "your_secret_key";
+const ai = require('./openai.js')
 
 app.use(express.json());
 app.use(cookieParser()); // make sure this is above your routes
 app.use(express.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
 
-const general = require('./routes/general.js');
-app.use('/', general);
-
 // Serve static files from the 'public' directory 
 app.use('/images', express.static(path.join(__dirname, 'public/images')));
 app.use('/scripts', express.static(path.join(__dirname, 'public/scripts')));
 app.use('/dump', express.static(path.join(__dirname, 'public/static')));
+app.use('/styles', express.static(path.join(__dirname, 'public/css')));
+
+
+// Ensure uploads directory exists
+const uploadDir = path.join(__dirname, 'public/static/uploads');
+fs.mkdirSync(uploadDir, { recursive: true });
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, uploadDir);
+  },
+  filename: (req, file, cb) => {
+    const uniqueName = `${Date.now()}-${file.originalname}`;
+    cb(null, uniqueName);
+  }
+});
+
+const upload = multer({ storage });
+
+
+const general = require('./routes/general.js');
+const { title } = require("process");
+app.use('/', general);
 
 function getIndiaTime() {
     let options = {
@@ -121,12 +144,156 @@ app.get('/logout', (req, res) => {
 });
 
 app.get('/dashboard', isAuthenticated, (req, res) => {
-    console.log(req.user)
-    res.render('dashboard')
+    let posts = JSON.parse(fs.readFileSync('db/posts.json', 'utf8'));
+
+    res.render('dashboard', {
+        username: req.user.username,
+        email: req.user.email,
+        posts
+    })
+})
+
+app.get('/maps', isAuthenticated, (req, res) => {
+    res.render('maps', {
+        username: req.user.username,
+        email: req.user.email
+    })
 })
 
 app.get('/assistant', isAuthenticated, (req, res) => {
-    res.render('assistant')
+    res.render('assistant', {
+        username: req.user.username,
+        email: req.user.email
+    })
 })
+
+app.put('/generate', isAuthenticated, (req, res) => {
+    console.log(req.body)
+
+    let userData = {
+        age: req.user.age,
+        gender: req.user.gender,
+        city: req.body.location,
+        lookingFor: req.body.interest
+    }
+
+    ai.openAI(userData).then(output => {
+        res.send(output)
+    })
+})
+
+
+app.get('/post/:postId', isAuthenticated, (req, res) => {
+    let postId = req.params.postId;
+    console.log(postId)
+    if (!postId) {
+        return res.send('Missing post id!');
+    }
+
+    let posts = JSON.parse(fs.readFileSync(`db/posts.json`, 'utf8'))
+    let index = posts.findIndex(e => e.id == postId)
+    if (index == -1) {
+        return res.send('Post not found!!')
+    }
+
+
+    let post = JSON.parse(fs.readFileSync(`db/posts/${postId}.json`, 'utf8'));
+    res.render('post', {
+        username: req.user.username,
+        email: req.user.email,
+        post,
+        postInfo: posts[index],
+        name: helper.getUsername(posts[index].author)
+    })
+})
+
+app.get('/post', isAuthenticated, (req, res) => {
+    res.render('new_post', {
+        username: req.user.username,
+        email: req.user.email
+    });
+})
+
+app.get('/festivals', isAuthenticated, (req, res) => {
+    res.render('festivals', {
+        username: req.user.username,
+        email: req.user.email
+    })
+})
+
+app.put('/generate-festivals', isAuthenticated, (req, res) => {
+    let place = req.body.location
+
+    const monthNames = [
+        "January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+    ];
+      
+    const currentDate = new Date();
+    const currentMonth = monthNames[currentDate.getMonth()];
+
+    ai.festivals(place, currentMonth).then(output => {
+        res.send(output)
+    })
+})
+
+app.post('/upload', upload.array('images', 20), isAuthenticated, (req, res) => {
+    console.log(req.body)
+    console.log(req.user)
+    
+    const fileNames = req.files.map(file => file.filename);
+    console.log('Uploaded file names:', fileNames);
+
+
+    // add to posts
+    let posts = JSON.parse(fs.readFileSync('db/posts.json', 'utf8'));
+    let postId = `post_${generateID(12)}`;
+
+    const nowIST = new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" });
+
+    posts.push({
+        id: postId,
+        title: req.body.title,
+        author: req.user.id,
+        thumbnail: fileNames[0],
+        createdOn: nowIST,
+        location: `${req.body.city}, ${req.body.state}`,
+        description: `${req.body.desc}`,
+        likes: 0
+    })
+
+    fs.writeFileSync('db/posts.json', JSON.stringify(posts, null, '\t'));
+
+    let postInfo = {
+        location: {
+            city: req.body.city,
+            state: req.body.state,
+            addressLine: req.body.addressLine,
+            geo: {
+                lat: req.body.latitude,
+                long: req.body.longitude,
+                address: req.body.address
+            },
+            images: fileNames,
+        },
+        howToReach: req.body.howToReach,
+        bestTime: req.body.bestTime,
+        budget: req.body.budget,
+        comments: [],
+        market: [],
+    }
+
+    fs.writeFileSync(`db/posts/${postId}.json`, JSON.stringify(postInfo, null, '\t'));
+    // add post ID to users profile
+    let user = JSON.parse(fs.readFileSync(`db/profiles/${req.user.id}.json`, 'utf8'));
+    user.posts.push(postId);
+
+    fs.writeFileSync(`db/profiles/${req.user.id}.json`, JSON.stringify(user, null, '\t'));
+
+
+});
+
+
+
 
 app.listen(PORT)
